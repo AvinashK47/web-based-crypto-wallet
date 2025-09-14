@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./App.css";
-import { generateMnemonic, mnemonicToSeed } from "bip39";
+import { generateMnemonic } from "bip39";
+import SolanaWallet from "./components/SolanaWallet";
+import { EthWallet } from "./components/EtherWallet";
 
 function App() {
   const [mnemonic, setMnemonic] = useState("");
@@ -12,14 +14,14 @@ function App() {
         onClick={async function () {
           const mn = generateMnemonic();
           setMnemonic(mn);
-          const seed = await mnemonicToSeed(mn);
-          console.log(seed);
         }}
       >
         Create Seed Phrase
       </button>
       <h2>Seed Phrase</h2>
       <div>{mnemonic}</div>
+      <SolanaWallet mnemonic={mnemonic} />
+      <EthWallet mnemonic={mnemonic} />
     </div>
   );
 }
