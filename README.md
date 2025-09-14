@@ -1,69 +1,41 @@
-# React + TypeScript + Vite
+# Web-Based Crypto Wallet
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a simple web-based cryptocurrency wallet that supports both Ethereum and Solana. It is a hierarchical deterministic (HD) wallet, which means it can generate multiple accounts from a single seed phrase.
 
-Currently, two official plugins are available:
+## Getting Started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+To get started with this project, follow these steps:
 
-## Expanding the ESLint configuration
+1. **Clone the repository:**
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+   ```bash
+   git clone https://github.com/AvinashK47/web-based-crypto-wallet.git
+   ```
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+2. **Install dependencies:**
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+   ```bash
+   npm install
+   ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+3. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## About the Wallet
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+This wallet is a hierarchical deterministic (HD) wallet. This means that you can generate a nearly infinite number of cryptocurrency accounts from a single 24-word seed phrase. The wallet uses the BIP39 standard for generating the seed phrase and the BIP32/BIP44 standards for deriving the accounts.
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+For Ethereum, the derivation path used is `m/44'/60'/0'/0/i`, where `i` is the account index.
+For Solana, the derivation path used is `m/44'/501'/i'/0'`, where `i` is the account index.
+
+## Technologies Used
+
+- **React:** A JavaScript library for building user interfaces.
+- **Vite:** A fast build tool for modern web projects.
+- **Ethers.js:** A complete and compact library for interacting with the Ethereum Blockchain and its ecosystem.
+- **Solana/web3.js:** The Solana JavaScript API.
+- **bip39:** A library for generating mnemonic phrases.
+- **ed25519-hd-key:** A library for hierarchical deterministic keys over the ed25519 curve.
+- **TypeScript:** A typed superset of JavaScript that compiles to plain JavaScript.
