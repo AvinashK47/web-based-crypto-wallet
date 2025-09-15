@@ -29,7 +29,9 @@ export default function SolanaWallet({ mnemonic }: SolanaWalletProps) {
       <button onClick={addWallet}>Add SOL Wallet</button>
       <div>
         {publicKeys.map((p) => (
-          <div key={p.toBase58()}>{p.toBase58()}</div>
+          <div key={p.toBase58()} style={{ padding: 2 }}>
+            {p.toBase58()}r
+          </div>
         ))}
       </div>
     </div>

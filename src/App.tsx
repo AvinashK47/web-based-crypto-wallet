@@ -20,7 +20,9 @@ function App() {
       </button>
       <h2>Seed Phrase</h2>
       <div>{mnemonic}</div>
+      <div style={{ padding: 5 }}></div>
       <SolanaWallet mnemonic={mnemonic} />
+      <div style={{ padding: 5 }}></div>
       <EthWallet mnemonic={mnemonic} />
     </div>
   );

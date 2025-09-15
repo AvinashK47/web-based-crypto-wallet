@@ -31,7 +31,9 @@ export const EthWallet = ({ mnemonic }: EthWalletProps) => {
       <button onClick={addEthWallet}>Add ETH wallet</button>
 
       {addresses.map((address) => (
-        <div key={address}>{address}</div>
+        <div key={address} style={{ padding: 2 }}>
+          {address}
+        </div>
       ))}
     </div>
   );
