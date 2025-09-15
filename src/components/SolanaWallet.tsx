@@ -1,18 +1,32 @@
 import { useState } from "react";
 import { mnemonicToSeed } from "bip39";
 import { derivePath } from "ed25519-hd-key";
-import { Keypair, PublicKey } from "@solana/web3.js";
+import {
+  clusterApiUrl,
+  Connection,
+  Keypair,
+  LAMPORTS_PER_SOL} from "@solana/web3.js";
 
 type SolanaWalletProps = {
   mnemonic: string;
 };
 
+interface WalletInfo {
+  publicKey: string;
+  balance: number;
+}
+
+const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
+
 export default function SolanaWallet({ mnemonic }: SolanaWalletProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [publicKeys, setPublicKeys] = useState<PublicKey[]>([]);
+  const [wallets, setWallets] = useState<WalletInfo[]>([]);
 
   const addWallet = async () => {
-    if (!mnemonic) return;
+    if (!mnemonic) {
+      alert("Please generate a seed phrase first.");
+      return;
+    }
 
     const seed = await mnemonicToSeed(mnemonic);
 
@@ -20,17 +34,21 @@ export default function SolanaWallet({ mnemonic }: SolanaWalletProps) {
     const derivedSeed = derivePath(path, Buffer.from(seed).toString("hex")).key;
     const keypair = Keypair.fromSeed(derivedSeed);
 
+    // fetching balances
+    const balanceLamports = await connection.getBalance(keypair.publicKey);
+    const balanceSol = balanceLamports / LAMPORTS_PER_SOL;
+
     setCurrentIndex(currentIndex + 1);
-    setPublicKeys([...publicKeys, keypair.publicKey]);
+    setWallets([...wallets,{ publicKey: keypair.publicKey.toBase58(), balance: balanceSol }]);
   };
 
   return (
     <div>
       <button onClick={addWallet}>Add SOL Wallet</button>
       <div>
-        {publicKeys.map((p) => (
-          <div key={p.toBase58()} style={{ padding: 2 }}>
-            {p.toBase58()}r
+        {wallets.map((wallet) => (
+          <div key={wallet.publicKey}>
+            SOL Address : {wallet.publicKey} | Balance: {wallet.balance.toFixed(5)} SOL
           </div>
         ))}
       </div>
