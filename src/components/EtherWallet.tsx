@@ -11,9 +11,7 @@ interface WalletInfo {
   balance: string;
 }
 
-const provider = new JsonRpcProvider(
-  "https://eth-mainnet.g.alchemy.com/v2/1NM8DdSW4mJYUWtMNZgkz"
-);
+const provider = new JsonRpcProvider("https://cloudflare-eth.com");
 
 export const EthWallet = ({ mnemonic }: EthWalletProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
