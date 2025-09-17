@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { mnemonicToSeed } from "bip39";
-import { Wallet, HDNodeWallet,JsonRpcProvider, formatEther } from "ethers";
+import { Wallet, HDNodeWallet, JsonRpcProvider, formatEther } from "ethers";
 
 type EthWalletProps = {
   mnemonic: string;
@@ -10,8 +10,9 @@ interface WalletInfo {
   address: string;
   balance: string;
 }
+const rpcUrl = import.meta.env.VITE_ALCHEMY_URL;
 
-const provider = new JsonRpcProvider("https://cloudflare-eth.com");
+const provider = new JsonRpcProvider(rpcUrl);
 
 export const EthWallet = ({ mnemonic }: EthWalletProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -37,9 +38,11 @@ export const EthWallet = ({ mnemonic }: EthWalletProps) => {
     const balanceWei = await provider.getBalance(newWallet.address);
     const balanceEth = formatEther(balanceWei);
 
-
     setCurrentIndex(currentIndex + 1);
-    setWallets([...wallets,{address : newWallet.address ,balance: balanceEth }]);
+    setWallets([
+      ...wallets,
+      { address: newWallet.address, balance: balanceEth },
+    ]);
   };
 
   return (
@@ -48,7 +51,8 @@ export const EthWallet = ({ mnemonic }: EthWalletProps) => {
 
       {wallets.map((wallet) => (
         <div key={wallet.address} style={{ padding: 2 }}>
-          ETH Address: {wallet.address} | Balance: {parseFloat(wallet.balance).toFixed(5)}ETH
+          ETH Address: {wallet.address} | Balance:{" "}
+          {parseFloat(wallet.balance).toFixed(5)}ETH
         </div>
       ))}
     </div>
